@@ -7,7 +7,11 @@ function run_cmd(cmd, args, callback) {
     const spawn = require('child_process').spawn;
     const child = spawn(cmd, args);
     let resp = "";
-    child.stdout.on('data', function (buffer) { resp += buffer.toString();});
+    child.stdout.on('data', function (buffer) {
+	    const str = buffer.toString();
+	    resp += str;
+	    console.log("当前执行信息",str);
+    });
     child.stdout.on('end', function () { callback(resp) });
 }
 http.createServer(function (req, res) {
