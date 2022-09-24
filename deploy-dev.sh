@@ -1,9 +1,9 @@
 echo 开始部署
 # 获取最新版代码
-rm -rf /root/source/blog_project/docs/note/*
-cd /root/source/note
+rm -rf /root/data/app/blog_project/docs/note/*
+cd /root/data/app/note
 git pull
-cp -r /root/source/note/* /root/source/blog_project/docs/note
-cd /root/source/blog_project
-yarn docs:build
+cp -r /root/data/app/note/* /root/data/app/blog_project/docs/note
+cd /root/data/app/blog_project
+npm run docs:build
 echo 完成部署
