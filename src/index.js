@@ -8,9 +8,9 @@ function run_cmd(cmd, args, callback) {
     const child = spawn(cmd, args);
     let resp = "";
     child.stdout.on('data', function (buffer) {
-	    const str = buffer.toString();
-	    resp += str;
-	    console.log("当前执行信息",str);
+        const str = buffer.toString();
+        resp += str;
+        console.log("当前执行信息", str);
     });
     child.stdout.on('end', function () { callback(resp) });
 }
@@ -27,11 +27,19 @@ handler.on('error', function (err) {
     console.error('Error:', err.message)
 })
 
+
 // 对push操作监听
 handler.on('push', function (event) {
     console.log('Received a push event for %s to %s',
         event.payload.repository.name,
         event.payload.ref);
-    run_cmd('sh', [path.resolve(__dirname,"../deploy-dev.sh")], function (text) { console.log(text) });
+    run_cmd('sh', [path.resolve(__dirname, "../deploy-dev.sh")], function (text) { console.log(text) });
 
 })
+
+/**
+ * 处理因为事件异常二崩溃
+ */
+process.on('uncaughtException', function (err) {
+    console.log(err);
+});
